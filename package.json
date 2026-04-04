@@ -1,6 +1,6 @@
 {
   "name": "vantmetry",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightweight frontend error tracking with minimal browser impact.",
   "type": "module",
   "main": "./index.js",
@@ -39,7 +39,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vantmetry/tracker"
+    "url": "git+https://github.com/vantmetry/tracker.git"
   },
   "homepage": "https://vantmetry.com",
   "publishConfig": {
