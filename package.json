@@ -1,0 +1,64 @@
+{
+  "name": "vantmetry",
+  "version": "0.0.1",
+  "description": "Lightweight frontend error tracking with minimal browser impact.",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./react": {
+      "import": "./react/index.js",
+      "types": "./react/index.d.ts"
+    },
+    "./next": {
+      "import": "./next/index.js",
+      "types": "./next/index.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "core",
+    "react",
+    "next",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "error-tracking",
+    "observability",
+    "frontend",
+    "browser",
+    "privacy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vantmetry/tracker"
+  },
+  "homepage": "https://vantmetry.com",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "author": "Vantmetry Team",
+  "license": "MIT",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "next": ">=13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    }
+  }
+}
