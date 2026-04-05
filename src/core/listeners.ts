@@ -13,9 +13,14 @@ export function initGlobalListeners(tracker: VantmetryTracker) {
       let message: string;
       let stack: string | undefined;
 
-      const errorObj = args.find((arg) => arg instanceof Error) as Error | undefined;
+      const errorIndex = args.findIndex((arg) => arg instanceof Error);
+      const errorObj = args[errorIndex] as Error | undefined;
       if (errorObj) {
-        message = errorObj.message || String(errorObj);
+        const prefix = args
+          .slice(0, errorIndex)
+          .filter((a) => typeof a === 'string')
+          .join(' ');
+        message = prefix ? `${prefix}: ${errorObj.message || String(errorObj)}` : errorObj.message || String(errorObj);
         stack = errorObj.stack;
       } else {
         message = args
@@ -53,10 +58,11 @@ export function initGlobalListeners(tracker: VantmetryTracker) {
 
   window.addEventListener('unhandledrejection', function (event: PromiseRejectionEvent) {
     const reason = event.reason;
+    const isError = reason instanceof Error;
     tracker.captureAutoError({
       type: 'promise',
-      message: reason instanceof Error ? reason.message : String(reason),
-      stack: reason instanceof Error ? reason.stack : undefined,
+      message: isError ? reason.message : String(reason),
+      stack: isError ? reason.stack : new Error(`Unhandled rejection: ${String(reason)}`).stack,
       severity: LogLevel.ERROR,
     });
   }, { capture: true });

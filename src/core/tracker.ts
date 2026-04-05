@@ -106,7 +106,13 @@ export class VantmetryTracker implements VantmetryInstance {
       return;
     }
 
-    const { message, details, stack } = payload;
+    let { message, stack } = payload;
+    const { details } = payload;
+
+    if (message instanceof Error) {
+      stack = stack ?? message.stack;
+      message = message.message || String(message);
+    }
 
     const maskedMessage = typeof message === 'string' ? maskPII(message) : message;
     const maskedDetails = typeof details === 'object' ? maskObjectPII(details) : details;
