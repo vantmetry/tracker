@@ -1,6 +1,6 @@
 {
   "name": "vantmetry",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Lightweight frontend error tracking with minimal browser impact.",
   "type": "module",
   "main": "./index.js",
