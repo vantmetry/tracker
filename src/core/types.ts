@@ -15,6 +15,7 @@ export interface VantmetryInstance {
   info: (message: string, details?: LogDetails) => void;
   debug: (message: string, details?: LogDetails) => void;
   flush: () => Promise<void>;
+  destroy: () => Promise<void>;
 }
 
 declare global {

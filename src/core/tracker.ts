@@ -43,6 +43,10 @@ export class VantmetryTracker implements VantmetryInstance {
 
   public async flush() {
     if (this.buffer.length === 0) {
+      if (this.flushTimer) {
+        clearTimeout(this.flushTimer);
+        this.flushTimer = null;
+      }
       return;
     }
 
@@ -67,6 +71,11 @@ export class VantmetryTracker implements VantmetryInstance {
     }
 
     await this.transport.send(dataPayload);
+  }
+
+  public async destroy() {
+    this.transport.close();
+    await this.flush();
   }
 
   // --- Internal Logic ---

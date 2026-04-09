@@ -25,4 +25,7 @@ export const logger: VantmetryInstance = {
   flush() {
     return getInstance().flush();
   },
+  destroy() {
+    return getInstance().destroy();
+  },
 };

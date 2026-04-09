@@ -4,6 +4,7 @@ const DEFAULT_INGESTOR_URL = 'https://ingestor.vantmetry.com:4433';
 
 export class TransportManager {
   private wtSession: WebTransport | null = null;
+  private wtInitPromise: Promise<void> | null = null;
   private readonly endpoint: string;
   private readonly wtEndpoint: string;
   private readonly debug: boolean;
@@ -18,11 +19,17 @@ export class TransportManager {
     } catch {
       this.debug = false;
     }
-
-    void this.initWT();
   }
 
-  private async initWT() {
+  private initWT(): Promise<void> {
+    if (this.wtInitPromise) {
+      return this.wtInitPromise;
+    }
+    this.wtInitPromise = this.connectWT();
+    return this.wtInitPromise;
+  }
+
+  private async connectWT(): Promise<void> {
     if (!('WebTransport' in window)) {
       return;
     }
@@ -46,6 +53,8 @@ export class TransportManager {
   }
 
   public async send(payload: string): Promise<void> {
+    await this.initWT();
+
     if (this.wtSession) {
       try {
         const stream = await this.wtSession.createUnidirectionalStream();
@@ -78,5 +87,12 @@ export class TransportManager {
         console.error('Vantmetry send failed', error);
       }
     });
+  }
+
+  public close() {
+    if (this.wtSession) {
+      this.wtSession.close();
+      this.wtSession = null;
+    }
   }
 }

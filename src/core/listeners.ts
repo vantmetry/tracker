@@ -67,10 +67,15 @@ export function initGlobalListeners(tracker: VantmetryTracker) {
     });
   }, { capture: true });
 
-  // Flush on page unload
-  document.addEventListener('visibilitychange', function () {
+  // Flush on page unload or visibility change
+  window.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') {
       void tracker.flush();
     }
+  });
+
+  // Enable bfcache restoration by closing transport on navigate away
+  window.addEventListener('pagehide', () => {
+    void tracker.destroy();
   });
 }
