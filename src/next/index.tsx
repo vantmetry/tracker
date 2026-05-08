@@ -10,8 +10,8 @@ export function VantmetryScript({ publicKey, ingestorUrl }: VantmetryConfig) {
   return (
     <Script
       strategy="afterInteractive"
-      data-public-key={publicKey}
-      data-ingestor-url={ingestorUrl}
+      data-vantmetry-key={publicKey}
+      data-vantmetry-url={ingestorUrl}
       src="https://cdn.vantmetry.com/tracker.js"
     />
   );
